@@ -122,6 +122,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\LandlordDialog.cs" />
+    <Compile Include="Dialogs\States\CreateExpenseState.cs" />
+    <Compile Include="Dialogs\States\CreatePropertyState.cs" />
+    <Compile Include="Dialogs\States\ILandlordState.cs" />
+    <Compile Include="Dialogs\States\InitialState.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
