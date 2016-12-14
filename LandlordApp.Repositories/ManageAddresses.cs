@@ -11,15 +11,37 @@ namespace LandlordApp.Repositories
 {
     public class ManageAddresses {
 
-        public DataSet AddAddress(Address address) {
-            List<DalParm> parms = new List<DalParm>();
-            parms.Add(new DalParm("AddressLine1", SqlDbType.VarChar, 100, address.AddressLine1));
-            parms.Add(new DalParm("AddressLine2", SqlDbType.VarChar, 100, address.AddressLine2));
-            parms.Add(new DalParm("Town", SqlDbType.VarChar, 100, address.Town));
-            parms.Add(new DalParm("County", SqlDbType.VarChar, 100, address.County));
+        //public DataSet AddAddress(Address address) {
+        //    List<DalParm> parms = new List<DalParm>();
+        //    parms.Add(new DalParm("AddressLine1", SqlDbType.VarChar, 100, address.AddressLine1));
+        //    parms.Add(new DalParm("AddressLine2", SqlDbType.VarChar, 100, address.AddressLine2));
+        //    parms.Add(new DalParm("Town", SqlDbType.VarChar, 100, address.Town));
+        //    parms.Add(new DalParm("County", SqlDbType.VarChar, 100, address.County));
 
-            DAL dal = new DAL();
-            return dal.RunSpReturnDs("AddAddress", parms);
+        //    MYOB.DAL.DAL dal = GetDal();
+        //    return dal.RunSpReturnDs("AddAddress");
+        //}
+
+        public List<Address> GetAddresses() {
+            MYOB.DAL.DAL dal = GetDal();
+            List<Address> addresses = new List<Address>();
+            DataSet ds = dal.RunSpReturnDs("GetAddresses");
+            if (ds.Tables.Count > 0) {
+                foreach (DataRow row in ds.Tables[0].Rows) {
+                    addresses.Add(new Address {
+                        AddressLine1 = row["AddressLine1"].ToString(),
+                        AddressLine2 = row["AddressLine1"].ToString(),
+                        Town = row["Town"].ToString(),
+                        County = row["County"].ToString()
+                    });
+                }
+            }
+            return addresses;
         }
+        public MYOB.DAL.DAL GetDal() {
+            MYOB.DAL.DAL dal = new MYOB.DAL.DAL(@"C:\Development\LandlordBot\LandlordBot\SharedAssemblies\Lookup.xml", "0", false, true);
+            return dal;
+        }
+
     }
 }

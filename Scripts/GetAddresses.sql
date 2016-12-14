@@ -8,9 +8,7 @@ drop procedure [dbo].[GetAddresses]
 GO
 
 Create Procedure [dbo].[GetAddresses]
- 
-	@LandlordId int
-	
+
 As
 
 	Select
@@ -29,8 +27,8 @@ As
 		dbo.Address a
 		INNER JOIN dbo.LandlordAddress la ON la.AddressId = a.AddressId						
 		INNER JOIN dbo.AddressType at ON at.AddressTypeId = la.AddressTypeId
-	Where
-		la.LandlordId = @LandlordId
+	--Where
+	--	la.LandlordId = @LandlordId
 
 	Order By 
 
