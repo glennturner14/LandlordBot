@@ -13,5 +13,6 @@ namespace LandlordApp.DomainModel.Entities
         public string Town { get; set; }
         public string County { get; set; }
         public string PostCode { get; set; }
+        public string Country { get; set; }
     }
 }
