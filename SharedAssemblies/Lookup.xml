@@ -1,0 +1,5 @@
+<Params>
+  <ConnectionString Key="0" String_Value="Data Source=tcp:zteybqk82l.database.windows.net,1433;Database=LandlordBot;User ID=vpmser;PWD=BelfrY18;Trusted_Connection=False;">
+    <Description>LandlordBot on tcp:zteybqk82l.database.windows.net,1433</Description>
+  </ConnectionString>
+  </Params>
