@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace LandlordApp.Dialogs {
         /// <returns></returns>
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result) {
-            string message = CurrentState.None();
+            string message = CurrentState.None(context, result);
             await SendReply(context, message);
         }
 
