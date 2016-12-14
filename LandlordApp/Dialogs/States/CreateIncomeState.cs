@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Luis.Models;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
@@ -37,5 +39,8 @@ namespace LandlordApp.Dialogs.States {
             throw new NotImplementedException();
         }
 
+        public string None(IDialogContext context, LuisResult result) {
+            throw new NotImplementedException();
+        }
     }
 }
