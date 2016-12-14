@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿using LandlordApp.Dialogs.States;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using System;
@@ -12,6 +13,20 @@ namespace LandlordApp.Dialogs {
     [Serializable]
     [LuisModel("fbd5a850-4d2c-404e-abf6-c6688d0bf7e2", "41421c8e26fd4a90a025d3afbf31831c")]
     public class LandlordDialog : LuisDialog<object> {
+
+        private ILandlordState _currentState;
+
+        public ILandlordState CurrentState {
+            get {
+                if (_currentState == null) {
+                    _currentState = new InitialState();
+                }
+
+                return _currentState; }
+
+            set { _currentState = value; }
+        }
+
         /// <summary>
         /// Deal with anything unknown
         /// </summary>
@@ -20,37 +35,38 @@ namespace LandlordApp.Dialogs {
         /// <returns></returns>
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result) {
-            string message = "I don't understand";
-            await context.PostAsync(message);
-            context.Wait(MessageReceived);
+            string message = _currentState.None();
+            await SendReply(context, message);
         }
 
         [LuisIntent("Greeting")]
         public async Task Greeting(IDialogContext context, LuisResult result) {
-            string message = "Greeting";
-            await context.PostAsync(message);
-            context.Wait(MessageReceived);
+            string message = _currentState.Greeting();
+            await SendReply(context, message);
         }
 
         [LuisIntent("CaptureIncome")]
         public async Task CaptureIncome(IDialogContext context, LuisResult result) {
-            string message = "Capture Income";
-            await context.PostAsync(message);
-            context.Wait(MessageReceived);
+            string message = _currentState.CaptureIncome();
+            await SendReply(context, message);
         }
 
         [LuisIntent("CaptureExpense")]
         public async Task CaptureExpense(IDialogContext context, LuisResult result) {
-            string message = "Capture Expense";
-            await context.PostAsync(message);
-            context.Wait(MessageReceived);
+            string message = _currentState.CaptureExpense();
+            await SendReply(context, message);
         }
 
         [LuisIntent("ShowStatement")]
         public async Task ShowStatement(IDialogContext context, LuisResult result) {
-            string message = "Show Statement";
+            string message = _currentState.ShowStatement();
+            await SendReply(context, message);
+        }
+
+        private async Task SendReply(IDialogContext context, string message) {
             await context.PostAsync(message);
             context.Wait(MessageReceived);
+            CurrentState = CurrentState.NextState;
         }
     }
 }
