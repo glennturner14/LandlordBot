@@ -10,7 +10,7 @@ using System.Web;
 namespace LandlordApp.Dialogs {
 
     [Serializable]
-    [LuisModel("17acd4d0-7ace-4ebe-ad71-89e7a3cc7512", "fb109555-6c75-422e-b4ad-dbaa254c246f"]
+    [LuisModel("17acd4d0-7ace-4ebe-ad71-89e7a3cc7512", "fb109555-6c75-422e-b4ad-dbaa254c246f")]
     public class LandlordDialog : LuisDialog<object> {
         /// <summary>
         /// Deal with anything unknown
