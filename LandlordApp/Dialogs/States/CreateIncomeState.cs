@@ -5,13 +5,12 @@ using System.Web;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
-    public class CreateExpenseState : ILandlordState {
+    public class CreateIncomeState : ILandlordState {
 
-        private string StatePrefix = "ES";
-
-        public static string ProvideExpenseMessage = "Please provide expense in the following format {dd / mm / yyyy},{Amount #.##}";
-        public static string GreetingExpenseMessage = "Hi, How are you doing? What would you like to do?";
+        public static string ProvideIncomeMessage = "Please provide income in the following format {freq},{Amount #.##}";
+        public static string GreetingIncomeMessage = "Hi, How are you doing? What would you like to do?";
         public static string DontUnderstand = "I don't understand";
+
         public ILandlordState NextState {
             get {
                 return this;
@@ -27,19 +26,16 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string Greeting() {
-            return GetStateMessage(GreetingExpenseMessage);
+            return GreetingIncomeMessage;
         }
 
         public string None() {
-            return GetStateMessage(DontUnderstand);
+            return DontUnderstand;
         }
 
         public string ShowStatement() {
             throw new NotImplementedException();
         }
 
-        private string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
-        }
     }
 }
