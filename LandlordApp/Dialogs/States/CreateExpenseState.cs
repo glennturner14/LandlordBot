@@ -113,16 +113,24 @@ namespace LandlordApp.Dialogs.States {
             //replyToConversation.Recipient = message.From;
             replyToConversation.Type = "message";
             replyToConversation.Attachments = new List<Attachment>();
+            
+            replyToConversation.Attachments.Add(CreateThumbnailAttachment());
+            replyToConversation.Attachments.Add(CreateThumbnailAttachment());
+
+            replyToConversation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
+            context.PostAsync(replyToConversation); ;
+
+            return "thumbnail";
+
+        }
+
+        private Attachment CreateThumbnailAttachment() {
+
             List<CardImage> cardImages = new List<CardImage>();
             cardImages.Add(new CardImage(url: "https://s-media-cache-ak0.pinimg.com/564x/39/03/b3/3903b3b596f8e4519c055ad5ca96a5a6.jpg"));
-            List <CardAction> cardButtons = new List<CardAction>();
-            CardAction plButton = new CardAction()
-            {
-                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
-                Type = "openUrl",
-                Title = "WikiPedia Page"
-            };
-            cardButtons.Add(plButton);
+            List<CardAction> cardButtons = new List<CardAction>();
+
             ThumbnailCard plCard = new ThumbnailCard()
             {
                 Title = "I'm a thumbnail card",
@@ -131,10 +139,8 @@ namespace LandlordApp.Dialogs.States {
                 Buttons = cardButtons
             };
             Attachment plAttachment = plCard.ToAttachment();
-            replyToConversation.Attachments.Add(plAttachment);
-            context.PostAsync(replyToConversation); ;
 
-            return "thumbnail";
+            return plAttachment;
 
         }
 
@@ -144,29 +150,35 @@ namespace LandlordApp.Dialogs.States {
             //replyToConversation.Recipient = context.From;
             replyToConversation.Type = "message";
             replyToConversation.Attachments = new List<Attachment>();
+            
+            replyToConversation.Attachments.Add(CreateHeroCardAttachment());
+            replyToConversation.Attachments.Add(CreateHeroCardAttachment());
+
+            replyToConversation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+            
+            context.PostAsync(replyToConversation);
+
+            return "I don't understand expense";
+
+        }
+
+        private Attachment CreateHeroCardAttachment() {
+
             List<CardImage> cardImages = new List<CardImage>();
             cardImages.Add(new CardImage(url: "https://s-media-cache-ak0.pinimg.com/564x/39/03/b3/3903b3b596f8e4519c055ad5ca96a5a6.jpg"));
-            //cardImages.Add(new CardImage(url: "https://<ImageUrl2>"));
             List<CardAction> cardButtons = new List<CardAction>();
-            CardAction plButton = new CardAction()
-            {
-                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
-                Type = "openUrl",
-                Title = "WikiPedia Page"
-            };
-            cardButtons.Add(plButton);
+
             HeroCard plCard = new HeroCard()
             {
                 Title = "I'm a hero card",
                 Subtitle = "Pig Latin Wikipedia Page",
                 Images = cardImages,
-                Buttons = cardButtons
+                Buttons = cardButtons,
+                Text = "blah blah blah"
             };
             Attachment plAttachment = plCard.ToAttachment();
-            replyToConversation.Attachments.Add(plAttachment);
-            context.PostAsync(replyToConversation);
 
-            return "I don't understand expense";
+            return plAttachment;
 
         }
 
