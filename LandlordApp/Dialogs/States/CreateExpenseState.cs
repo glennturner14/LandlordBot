@@ -166,7 +166,7 @@ namespace LandlordApp.Dialogs.States {
             replyToConversation.Attachments.Add(plAttachment);
             context.PostAsync(replyToConversation);
 
-            return GetStateMessage(DontUnderstand);
+            return "I don't understand expense";
 
         }
 
