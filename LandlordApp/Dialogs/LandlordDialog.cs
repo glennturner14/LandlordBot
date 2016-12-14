@@ -10,7 +10,7 @@ using System.Web;
 namespace LandlordApp.Dialogs {
 
     [Serializable]
-    [LuisModel("17acd4d0-7ace-4ebe-ad71-89e7a3cc7512", "0a34417817d84d0092701a2b07d73d78")]
+    [LuisModel("fbd5a850-4d2c-404e-abf6-c6688d0bf7e2", "41421c8e26fd4a90a025d3afbf31831c")]
     public class LandlordDialog : LuisDialog<object> {
         /// <summary>
         /// Deal with anything unknown
@@ -21,6 +21,13 @@ namespace LandlordApp.Dialogs {
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result) {
             string message = "unknown";
+            await context.PostAsync(message);
+            context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("Greeting")]
+        public async Task Greeting(IDialogContext context, LuisResult result) {
+            string message = "Greeting";
             await context.PostAsync(message);
             context.Wait(MessageReceived);
         }
