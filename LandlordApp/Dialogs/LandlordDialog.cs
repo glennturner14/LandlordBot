@@ -20,7 +20,7 @@ namespace LandlordApp.Dialogs {
         /// <returns></returns>
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result) {
-            string message = "unknown";
+            string message = "I don't understand";
             await context.PostAsync(message);
             context.Wait(MessageReceived);
         }
