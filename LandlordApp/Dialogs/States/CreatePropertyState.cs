@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace LandlordApp.Dialogs.States {
+    [Serializable]
     public class CreatePropertyState : ILandlordState {
         public string CaptureExpense() {
             throw new NotImplementedException();

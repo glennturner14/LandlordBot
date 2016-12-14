@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace LandlordApp.Dialogs.States {
+    [Serializable]
     public class CreateExpenseState : ILandlordState {
         public ILandlordState NextState {
             get {

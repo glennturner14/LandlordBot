@@ -35,31 +35,31 @@ namespace LandlordApp.Dialogs {
         /// <returns></returns>
         [LuisIntent("")]
         public async Task None(IDialogContext context, LuisResult result) {
-            string message = _currentState.None();
+            string message = CurrentState.None();
             await SendReply(context, message);
         }
 
         [LuisIntent("Greeting")]
         public async Task Greeting(IDialogContext context, LuisResult result) {
-            string message = _currentState.Greeting();
+            string message = CurrentState.Greeting();
             await SendReply(context, message);
         }
 
         [LuisIntent("CaptureIncome")]
         public async Task CaptureIncome(IDialogContext context, LuisResult result) {
-            string message = _currentState.CaptureIncome();
+            string message = CurrentState.CaptureIncome();
             await SendReply(context, message);
         }
 
         [LuisIntent("CaptureExpense")]
         public async Task CaptureExpense(IDialogContext context, LuisResult result) {
-            string message = _currentState.CaptureExpense();
+            string message = CurrentState.CaptureExpense();
             await SendReply(context, message);
         }
 
         [LuisIntent("ShowStatement")]
         public async Task ShowStatement(IDialogContext context, LuisResult result) {
-            string message = _currentState.ShowStatement();
+            string message = CurrentState.ShowStatement();
             await SendReply(context, message);
         }
 
