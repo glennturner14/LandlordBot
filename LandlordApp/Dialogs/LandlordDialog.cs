@@ -31,5 +31,26 @@ namespace LandlordApp.Dialogs {
             await context.PostAsync(message);
             context.Wait(MessageReceived);
         }
+
+        [LuisIntent("CaptureIncome")]
+        public async Task CaptureIncome(IDialogContext context, LuisResult result) {
+            string message = "Capture Income";
+            await context.PostAsync(message);
+            context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("CaptureExpense")]
+        public async Task CaptureExpense(IDialogContext context, LuisResult result) {
+            string message = "Capture Expense";
+            await context.PostAsync(message);
+            context.Wait(MessageReceived);
+        }
+
+        [LuisIntent("ShowStatement")]
+        public async Task ShowStatement(IDialogContext context, LuisResult result) {
+            string message = "Show Statement";
+            await context.PostAsync(message);
+            context.Wait(MessageReceived);
+        }
     }
 }
