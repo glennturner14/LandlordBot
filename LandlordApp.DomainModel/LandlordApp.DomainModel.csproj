@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Expense.cs" />
+    <Compile Include="Entities\Income.cs" />
+    <Compile Include="Entities\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
