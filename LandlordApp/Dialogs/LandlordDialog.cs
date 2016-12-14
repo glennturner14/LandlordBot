@@ -40,7 +40,7 @@ namespace LandlordApp.Dialogs {
             await SendReply(context, message);
         }
 
-        [LuisIntent("Greeting")]
+        [LuisIntent("greeting")]
         public async Task Greeting(IDialogContext context, LuisResult result) {
             string message = CurrentState.Greeting();
             await SendReply(context, message);
