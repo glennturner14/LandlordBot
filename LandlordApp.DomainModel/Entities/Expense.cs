@@ -8,6 +8,7 @@ namespace LandlordApp.DomainModel.Entities
 {
     public class Expense
     {
+        public Property Property { get; set; }
         public DateTime  Date { get; set; }
         public string Description { get; set; }
         public Category ExpenseCategory { get; set; }

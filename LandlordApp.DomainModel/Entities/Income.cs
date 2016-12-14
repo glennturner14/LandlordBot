@@ -16,6 +16,7 @@ namespace LandlordApp.DomainModel.Entities
 
     public class Income
     {
+        public Property Property { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Frequency RentFrequency { get; set; }
