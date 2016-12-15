@@ -18,7 +18,8 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
+            //return string.Format("{0}-{1}", StatePrefix, msg);
+            return msg;
         }
     }
 }

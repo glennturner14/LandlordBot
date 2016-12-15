@@ -12,7 +12,7 @@ namespace LandlordApp.Dialogs.States {
     [Serializable]
     public class CreateExpenseState : BaseState, ILandlordState {
 
-        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format: {Date dd/mm/yy},{Amount #.##},{desc} :@";
+        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format eg 15/12/16, 1600, fixed roof";
         public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created. (Y)";
 
         private ILandlordState _nextState;
