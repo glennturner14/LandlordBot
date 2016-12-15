@@ -94,8 +94,8 @@ namespace LandlordApp.Dialogs.States {
 
             foreach (StatementLine statementLine in statementLines) {
                 ReceiptItem lineItem1 = new ReceiptItem() {
-                    Title = string.Format("{0} - {1}", statementLine.Date, (string.IsNullOrEmpty(statementLine.Description) ? "Rent" : statementLine.Description)),
-                    Subtitle = "8 lbs",
+                    Title = statementLine.Date, 
+                    Subtitle = string.IsNullOrEmpty(statementLine.Description) ? "Rent" : statementLine.Description,
                     Text = null,
                     Price = statementLine.Amount.ToString("#,##0.00;(#,##0.00)"),
                     Quantity = "1",
