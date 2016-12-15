@@ -112,7 +112,7 @@ namespace LandlordApp.Dialogs.States
             }
 
             _nextState = new InitialState();
-            return "Income created successfully " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
+            return "Income created successfully (wave) " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
 
         }
 
