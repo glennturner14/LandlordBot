@@ -1,4 +1,5 @@
 ﻿using LandlordApp.DomainModel.Entities;
+using LandlordApp.Repositories;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
@@ -74,21 +75,24 @@ namespace LandlordApp.Dialogs.States {
             //}
 
             Expense expense = null;
+            try {
+                //15/12/16,100.00,Taps,Bathroom
+                string[] split = result.Query.Split(new Char[] { ',' });
+                if (split.Count() > 0 && split.Count() == 3) { 
+                    //We have an expense format...
+                    string date = split[0];
+                    string amount = split[1];
+                    string desc = split[2];
 
-            //15/12/16,100.00,Taps,Bathroom
-            string[] split = result.Query.Split(new Char[] { ',' });
-            if (split.Count() > 0 && split.Count() == 3) { 
-                //We have an expense format...
-                string date = split[0];
-                string amount = split[1];
-                string desc = split[2];
+                    expense = CreateExpense(date, amount, desc);
 
-                expense = CreateExpense(date, amount, desc);
-
-                //We have a valid date save to the DB...
-
+                    //We have a valid date save to the DB...
+                    ExpenseGateway expenseGateway = new ExpenseGateway();
+                    expenseGateway.CreateExpense(expense);
+                }
+            } catch (Exception ex) {
+                return "Error creating an expense: " + ex.Message;
             }
-
             if (expense != null) {
 
                 _nextState = new InitialState();
@@ -117,6 +121,7 @@ namespace LandlordApp.Dialogs.States {
                 return null;
            
             expense.Description = desc;
+            expense.Property = new Property() { PropertyId = 1 };
 
             return expense;
         }
@@ -246,6 +251,11 @@ namespace LandlordApp.Dialogs.States {
 
         public string ShowStatement(IDialogContext context, LuisResult result) {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
+        }
+
+        public string CreateProperty(IDialogContext context, LuisResult result)
+        {
+            throw new NotImplementedException();
         }
     }
 }

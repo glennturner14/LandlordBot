@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿using LandlordApp.DomainModel.Entities;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using System;
@@ -105,5 +106,100 @@ namespace LandlordApp.Dialogs.States {
             return "create receipt";
         }
 
+        public string CreateProperty(IDialogContext context, LuisResult result)
+        {
+
+            var properties = new List<Property>();
+            properties.Add(new Property() {
+                PropertyId = 1,
+                Address = new DomainModel.Entities.Address() {
+                    AddressLine1 = "125 London Road",
+                    Town = "Kingston upon Thames",
+                    County  ="Surrey",
+                    Country =  "UK",
+                    PostCode = "KT2 6SR"
+                },
+                Type = PropertyType.UKProperty
+            });
+
+            properties.Add(new Property()
+            {
+                PropertyId = 1,
+                Address = new DomainModel.Entities.Address()
+                {
+                    AddressLine1 = "1 Brighton Road",
+                    Town = "Brighton",
+                    County = "West Sussex",
+                    Country = "UK",
+                    PostCode = "BR1 3PU"
+                },
+                Type = PropertyType.UKFurnishedHolidayLet
+            });
+
+            properties.Add(new Property()
+            {
+                PropertyId = 1,
+                Address = new DomainModel.Entities.Address()
+                {
+                    AddressLine1 = "1 Jean Claude Route",
+                    Town = "Nante",
+                    County = "???",
+                    Country = "France",
+                },
+                Type = PropertyType.EEAFurnishedHolidayLet
+            });
+
+            var replyToConversation = context.MakeMessage();
+            replyToConversation.Type = "message";
+            replyToConversation.Attachments = new List<Attachment>();
+
+            foreach (var property in properties)
+            {
+                replyToConversation.Attachments.Add(CreateThumbnailAttachment(property));
+            }
+            
+            replyToConversation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
+            context.PostAsync(replyToConversation);
+
+
+            _nextState = new InitialState();
+            return "Create property";
+        }
+
+        private Attachment CreateThumbnailAttachment(Property property)
+        {
+
+            string imageUrl = "http://www.ipsproperty.co.uk/s/cc_images/cache_2424252058.png?t=1343996963";
+            switch (property.Type)
+            {
+                case PropertyType.UKFurnishedHolidayLet:
+                    imageUrl = "https://www.midoro.me/wp-content/uploads/2014/01/House-for-Holiday-128x128.png";
+                    break;
+                case PropertyType.EEAFurnishedHolidayLet:
+                    imageUrl = "https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/european-union-eu-flag-missing-star-brexit.jpg?itok=BByEG7EK";
+                    break;
+            }
+
+            List<CardImage> cardImages = new List<CardImage>();
+            cardImages.Add(new CardImage(url: imageUrl));
+            List<CardAction> cardButtons = new List<CardAction>();
+
+            ThumbnailCard plCard = new ThumbnailCard()
+            {
+                Title = property.Address.AddressLine1,
+                Subtitle = Enum.GetName(typeof(PropertyType), property.Type),
+                Images = cardImages,
+                Buttons = cardButtons,
+                Text = 
+                property.Address.AddressLine1
+                + "\r\n" + property.Address.County
+                + "\r\n" + property.Address.Country
+            };
+            Attachment plAttachment = plCard.ToAttachment();
+
+            return plAttachment;
+
+        }
     }
 }

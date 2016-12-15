@@ -22,6 +22,6 @@ namespace LandlordApp.Dialogs.States {
         ILandlordState NextState { get; }
 
         string None(IDialogContext context, LuisResult result);
-
+        string CreateProperty(IDialogContext context, LuisResult result);
     }
 }
