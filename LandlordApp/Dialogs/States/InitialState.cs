@@ -69,7 +69,7 @@ namespace LandlordApp.Dialogs.States {
             StatementGateway statementGateway = new StatementGateway();
             List<StatementLine> statementLines = statementGateway.GetStatementLines();
 
-            CreateStatement(context, result, "Account Statement to date", statementLines);
+            CreateStatement(context, result, "Account Statement to date".PadRight(50,'.'), statementLines);
 
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
