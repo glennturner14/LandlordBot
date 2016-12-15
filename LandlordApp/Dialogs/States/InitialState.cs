@@ -44,6 +44,14 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string None(IDialogContext context, LuisResult result) {
+
+            if(result.Query.StartsWith("select "))
+            {
+                int propertyID = Convert.ToInt32(result.Query.Replace("select ", ""));
+                _nextState = new PropertySelectedState(propertyID);
+                return "property selected";
+            }
+
             return GetStateMessage(MESSAGE_DONTUNDERSTAND);
         }
 
