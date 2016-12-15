@@ -32,9 +32,18 @@ namespace LandlordApp.Repositories {
             StatementLine statementLine = new StatementLine();
             statementLine.Date = drStatementLine["Date"].ToString();
             statementLine.Description = drStatementLine["Description"].ToString();
-            statementLine.Amount = drStatementLine["Amount"].ToString();
+            statementLine.Amount = GetFormattedAmount(drStatementLine["Amount"].ToString());
 
             return statementLine;
+        }
+
+        private string GetFormattedAmount(string Amount) {
+            decimal decimalAmount;
+
+            if (decimal.TryParse(Amount, out decimalAmount))
+                return decimalAmount > 0 ? decimalAmount.ToString() : string.Format("{(0)}", decimalAmount * -1);
+            else
+                return "0";
         }
     }
 }
