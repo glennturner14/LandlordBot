@@ -93,7 +93,7 @@ namespace LandlordApp.Dialogs.States {
 
                 _nextState = new InitialState();
 
-                return GetStateMessage(string.Format("{0} - {1}, {2}, {3}", MESSAGE_CREATEDEXPENSE, expense.Date, expense.Amount, expense.Description));
+                return GetStateMessage(string.Format("{0} - {1}, £{2}, {3}", MESSAGE_CREATEDEXPENSE, expense.Date.ToShortDateString(), expense.Amount, expense.Description));
             }
             else {
                 //Invalid Expense...
