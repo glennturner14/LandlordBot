@@ -188,7 +188,7 @@ namespace LandlordApp.Dialogs.States {
 
             CardAction plButton = new CardAction()
             {
-                Value = "prop_select_" + property.PropertyId,
+                Value = "select " + property.PropertyId,
                 Type = "imBack",
                 Title = "select"
             };
