@@ -86,7 +86,7 @@ namespace LandlordApp.Dialogs.States {
             CardAction plButton = new CardAction() {
                 Value = "https://en.wikipedia.org/wiki/Pig_Latin",
                 Type = "openUrl",
-                Title = "WikiPedia Page"
+                Title = ""
             };
             cardButtons.Add(plButton);
 
@@ -131,7 +131,7 @@ namespace LandlordApp.Dialogs.States {
             {
                 Value = "https://en.wikipedia.org/wiki/Pig_Latin",
                 Type = "openUrl",
-                Title = "WikiPedia Page"
+                Title = ""
             };
             cardButtons.Add(plButton);
 
