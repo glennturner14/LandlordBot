@@ -1,0 +1,71 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+DAL
+</name>
+</assembly>
+<members>
+<member name="T:MYOB.DAL.RegSAM">
+ In 64 bit environments we force Central to run in 32 bit mode so it is then unable to read
+ from the 64 bit part of the registry. In some circumstances though we want to be able to 
+ do this such as when a user is trying to use travelling and only has a 64bit version of
+ SQL Express 2008 installed. 
+ 
+ In .Net 4 you can do this using .Net calls but for now we need to do this using unmanaged 
+ code such as below. If you are reading this and Central now uses .Net 4 then please re-write as approriate!
+
+</member><member name="P:MYOB.DAL.DAL.RequireTransaction">
+	<summary>
+ When set to false prevents the DAL creating a local transaction if one isn't already present
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:MYOB.DAL.DAL.UseMasterDB">
+	<summary>
+ When opening the connection overide the default database and connect through to Master instead.
+ This allow DB certain DDL commands to be executed that require the DB to be not in use.
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:MYOB.DAL.DAL.IsInTransaction">
+	<summary>
+ This property now checks the connection property to ensure the connection is open
+ before checking whether the SqlTransaction object exists, this picks up 
+ "Zombie" sqlTransaction objects
+  
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:MYOB.DAL.DAL.#ctor(System.String,System.Int32,System.String)">
+	<summary>
+ Currently this constructor is used only from within Audit Automation.
+ </summary>
+	<param name="Key"></param>
+	<param name="_employeeId"></param>
+	<param name="_additionalParameters">Additional parameter used only from within Audit Automation</param>
+	<remarks></remarks>
+</member><member name="M:MYOB.DAL.DAL.#ctor(System.String,System.String,System.Boolean,System.Boolean)">
+	<summary>
+ DAL constructor
+ </summary>
+	<param name="LookupPath">the path to the lookup.xml</param>
+	<param name="Key">the key to the wanted connection string</param>
+	<param name="trusted"></param>
+	<param name="usingIIS">true if never look for lookup.xml in any other location but the one specified</param>
+	<remarks></remarks>
+</member><member name="M:MYOB.DAL.DAL.Rollback">
+	<summary>
+ the rollback does not bubble up exceptions due to disconnections or
+ when there is nothing to rollback. rational is that in these scenarios we
+ dont care whether it actually did it or not because the end result is the same
+ nothing applied in the transaction is committed.
+ failed 
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>
