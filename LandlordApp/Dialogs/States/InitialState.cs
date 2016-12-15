@@ -105,5 +105,10 @@ namespace LandlordApp.Dialogs.States {
             return "create receipt";
         }
 
+        public string CreateProperty(IDialogContext context, LuisResult result)
+        {
+            _nextState = new InitialState();
+            return "Create property";
+        }
     }
 }

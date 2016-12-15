@@ -115,5 +115,10 @@ namespace LandlordApp.Dialogs.States
             return "Income created successfully " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
 
         }
+
+        public string CreateProperty(IDialogContext context, LuisResult result)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
