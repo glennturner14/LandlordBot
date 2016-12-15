@@ -6,6 +6,8 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 using LandlordApp.Repositories;
 using LandlordApp.DomainModel.Entities;
+using System.Threading;
+using System.Globalization;
 
 namespace LandlordApp.Dialogs.States
 {
@@ -80,6 +82,17 @@ namespace LandlordApp.Dialogs.States
             if (!DateTime.TryParse(startDateText, out startDate)) {
                 return "I don't understand the start date \"" + startDateText + "\". Please enter correct date.";
             }
+
+            //if (System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern == "M/d/yyyy") {
+            //    if (!DateTime.TryParse(startDateText, out startDate)) {
+            //        return "I don't understand the start date \"" + startDateText + "\". Please enter correct date.";
+            //    }
+            //}
+            //else {
+            //    if (!DateTime.TryParse(startDateText, out startDate)) {
+            //        return "I don't understand the start date \"" + startDateText + "\". Please enter correct date.";
+            //    }
+            //}
 
             var frequency = Frequency.Unknown;
 
