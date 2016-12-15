@@ -15,9 +15,9 @@ namespace LandlordApp.Dialogs.States
     public class CreateIncomeState : ILandlordState
     {
 
-        public static string ProvideIncomeMessage = "Please provide income in the following format: start date, frequency, amount e.g. 15/12/16, monthly, 1600";
+        public static string ProvideIncomeMessage = "Please provide income in the following format: start date, frequency, amount e.g. 15/12/16, monthly, 1600 :@";
         public static string GreetingIncomeMessage = "Hi, How are you doing? What would you like to do? (wave)";
-        public static string DontUnderstand = "I don't understand";
+        public static string DontUnderstand = "I don't understand :s";
 
         private ILandlordState _nextState;
 
@@ -127,11 +127,11 @@ namespace LandlordApp.Dialogs.States
                 IncomeGateway incomeGateway = new IncomeGateway();
                 incomeGateway.CreateIncome(income);
             } catch (Exception ex) {
-                return "Error creating income: " + ex.Message;
+                return "Error creating income (wasntme) : " + ex.Message;
             }
 
             _nextState = new InitialState();
-            return "Income created successfully " + startDate.ToShortDateString() + ", " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
+            return "Income created successfully (Y) " + startDate.ToShortDateString() + ", " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
 
         }
 

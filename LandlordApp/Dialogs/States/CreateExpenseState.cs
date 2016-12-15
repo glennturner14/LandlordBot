@@ -12,8 +12,8 @@ namespace LandlordApp.Dialogs.States {
     [Serializable]
     public class CreateExpenseState : BaseState, ILandlordState {
 
-        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format: {Date dd/mm/yy},{Amount #.##},{desc}";
-        public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created.";
+        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format: {Date dd/mm/yy},{Amount #.##},{desc} :@";
+        public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created. (Y)";
 
         private ILandlordState _nextState;
 
@@ -91,7 +91,7 @@ namespace LandlordApp.Dialogs.States {
                     expenseGateway.CreateExpense(expense);
                 }
             } catch (Exception ex) {
-                return "Error creating an expense: " + ex.Message;
+                return "Error creating an expense (wasntme) : " + ex.Message;
             }
             if (expense != null) {
 
