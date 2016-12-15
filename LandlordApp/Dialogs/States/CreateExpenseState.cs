@@ -134,13 +134,13 @@ namespace LandlordApp.Dialogs.States {
             List<CardImage> cardImages = new List<CardImage>();
             //cardImages.Add(new CardImage(url: "https://static-s.aa-cdn.net/img/gp/20600004700445/H8HgqumAcQ6CV3VqjlqUNfatF5xzrgcETIApZy5vTu_y8zGATBeZ-KhaAW_rh9Vuzg=w300?v=1"));
             List<CardAction> cardButtons = new List<CardAction>();
-            CardAction plButton = new CardAction()
-            {
-                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
-                Type = "openUrl",
-                Title = ""
-            };
-            cardButtons.Add(plButton);
+            //CardAction plButton = new CardAction()
+            //{
+            //    Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+            //    Type = "openUrl",
+            //    Title = ""
+            //};
+            //cardButtons.Add(plButton);
 
             List<ReceiptItem> receiptList = new List<ReceiptItem>();
 
