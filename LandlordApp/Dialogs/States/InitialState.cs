@@ -53,8 +53,7 @@ namespace LandlordApp.Dialogs.States {
                 return "property selected";
             }
 
-            //return GetStateMessage(MESSAGE_DONTUNDERSTAND);
-            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
         }
 
         public string ShowStatement(IDialogContext context, LuisResult result) {
