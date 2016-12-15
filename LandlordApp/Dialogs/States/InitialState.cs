@@ -1,4 +1,5 @@
 ﻿using LandlordApp.DomainModel.Entities;
+using LandlordApp.Repositories;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
@@ -48,15 +49,66 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string ShowStatement(IDialogContext context, LuisResult result) {
-            var descriptions = new List<string>();
-            var amounts = new List<decimal>();
-            for (int i = 0; i < 12; i++)
-            {
-                descriptions.Add(new DateTime(2016, i + 1, 21).ToShortDateString() + " -  Rent");
-                amounts.Add(1200);
-            }
-            CreateReceipt(context, result, "Account Statement to date", descriptions.ToArray(), amounts.ToArray(), 1000m);
+            //var descriptions = new List<string>();
+            //var amounts = new List<decimal>();
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    descriptions.Add(new DateTime(2016, i + 1, 21).ToShortDateString() + " -  Rent");
+            //    amounts.Add(1200);
+            //}
+            //CreateReceipt(context, result, "Account Statement to date", descriptions.ToArray(), amounts.ToArray(), 1000m);
+
+            StatementGateway statementGateway = new StatementGateway();
+            List<StatementLine> statementLines = statementGateway.GetStatementLines();
+
+            CreateStatement(context, result, "Account Statement to date", statementLines);
+
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
+        }
+
+
+
+        private string CreateStatement(IDialogContext context, LuisResult result, string title, List<StatementLine> statementLines) {
+            var replyToConversation = context.MakeMessage();
+            replyToConversation.Type = "message";
+            replyToConversation.Attachments = new List<Attachment>();
+            List<CardImage> cardImages = new List<CardImage>();
+            //cardImages.Add(new CardImage(url: "https://static-s.aa-cdn.net/img/gp/20600004700445/H8HgqumAcQ6CV3VqjlqUNfatF5xzrgcETIApZy5vTu_y8zGATBeZ-KhaAW_rh9Vuzg=w300?v=1"));
+            List<CardAction> cardButtons = new List<CardAction>();
+            CardAction plButton = new CardAction() {
+                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+                Type = "openUrl",
+                Title = "WikiPedia Page"
+            };
+            cardButtons.Add(plButton);
+
+            List<ReceiptItem> receiptList = new List<ReceiptItem>();
+
+            foreach (StatementLine statementLine in statementLines) {
+                ReceiptItem lineItem1 = new ReceiptItem() {
+                    Title = string.Format("{0} - {1}", statementLine.Date, (string.IsNullOrEmpty(statementLine.Description) ? "Rent" : statementLine.Description)),
+                    Subtitle = "8 lbs",
+                    Text = null,
+                    Price = statementLine.Amount.ToString("#,##0.00;(#,##0.00)"),
+                    Quantity = "1",
+                    Tap = null
+                };
+                receiptList.Add(lineItem1);
+            }
+
+
+
+            ReceiptCard plCard = new ReceiptCard() {
+                Title = title,
+                Buttons = cardButtons,
+                Items = receiptList,
+                Total = statementLines.Sum(x => x.Amount).ToString("#,###,##0.00")
+            };
+            Attachment plAttachment = plCard.ToAttachment();
+            replyToConversation.Attachments.Add(plAttachment);
+            context.PostAsync(replyToConversation);
+
+            return "create receipt";
         }
 
         private string CreateReceipt(IDialogContext context, LuisResult result, string title, string[] descriptions, decimal[] prices, decimal tax)
