@@ -37,7 +37,7 @@ namespace LandlordApp.Dialogs.States {
         public string CaptureIncome() {
             if (_currentProperty)
             _nextState = new CreateIncomeState();
-            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
+            return GetStateMessage(CreateIncomeState.ProvideIncomeMessage);
         }
 
         public ILandlordState NextState {
@@ -52,7 +52,7 @@ namespace LandlordApp.Dialogs.States {
             throw new NotImplementedException();
         }
 
-        public string ShowStatement() {
+        public string ShowStatement(IDialogContext context, LuisResult result) {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
     }

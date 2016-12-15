@@ -25,7 +25,7 @@ namespace LandlordApp.Dialogs.States {
 
         public string CaptureIncome() {
             _nextState = new CreateIncomeState();
-            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
+            return GetStateMessage(CreateIncomeState.ProvideIncomeMessage);
         }
 
         public ILandlordState NextState {
@@ -56,10 +56,6 @@ namespace LandlordApp.Dialogs.States {
             }
             CreateReceipt(context, result, "Account Statement to date", descriptions.ToArray(), amounts.ToArray(), 1000m);
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
-        }
-
-        private string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
         }
 
         private string CreateReceipt(IDialogContext context, LuisResult result, string title, string[] descriptions, decimal[] prices, decimal tax)

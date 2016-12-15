@@ -41,7 +41,7 @@ namespace LandlordApp.Dialogs.States {
 
         public string CaptureIncome() {
             _nextState = new CreateIncomeState();
-            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
+            return GetStateMessage(CreateIncomeState.ProvideIncomeMessage);
         }
 
         public string Greeting() {
@@ -244,10 +244,7 @@ namespace LandlordApp.Dialogs.States {
         }
 
 
-
-        private string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
-        public string ShowStatement() {
+        public string ShowStatement(IDialogContext context, LuisResult result) {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
     }

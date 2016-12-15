@@ -23,6 +23,5 @@ namespace LandlordApp.Dialogs.States {
 
         string None(IDialogContext context, LuisResult result);
 
-        bool CurrentProperty { get; }
     }
 }
