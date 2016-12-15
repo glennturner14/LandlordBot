@@ -124,7 +124,7 @@ namespace LandlordApp.Dialogs.States {
 
             properties.Add(new Property()
             {
-                PropertyId = 1,
+                PropertyId = 2,
                 Address = new DomainModel.Entities.Address()
                 {
                     AddressLine1 = "1 Brighton Road",
@@ -138,7 +138,7 @@ namespace LandlordApp.Dialogs.States {
 
             properties.Add(new Property()
             {
-                PropertyId = 1,
+                PropertyId = 3,
                 Address = new DomainModel.Entities.Address()
                 {
                     AddressLine1 = "1 Jean Claude Route",
@@ -164,7 +164,8 @@ namespace LandlordApp.Dialogs.States {
 
 
             _nextState = new InitialState();
-            return "Create property";
+
+            return null;
         }
 
         private Attachment CreateThumbnailAttachment(Property property)
@@ -184,6 +185,14 @@ namespace LandlordApp.Dialogs.States {
             List<CardImage> cardImages = new List<CardImage>();
             cardImages.Add(new CardImage(url: imageUrl));
             List<CardAction> cardButtons = new List<CardAction>();
+
+            CardAction plButton = new CardAction()
+            {
+                Value = "prop_select_" + property.PropertyId,
+                Type = "postBack",
+                Title = "select"
+            };
+            cardButtons.Add(plButton);
 
             ThumbnailCard plCard = new ThumbnailCard()
             {
