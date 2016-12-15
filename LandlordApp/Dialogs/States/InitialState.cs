@@ -90,6 +90,8 @@ namespace LandlordApp.Dialogs.States {
             //};
             //cardButtons.Add(plButton);
 
+            replyToConversation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
             List<ReceiptItem> receiptList = new List<ReceiptItem>();
 
             foreach (StatementLine statementLine in statementLines) {
@@ -103,16 +105,16 @@ namespace LandlordApp.Dialogs.States {
                 };
                 receiptList.Add(lineItem1);
             }
-
-
-
+            
             ReceiptCard plCard = new ReceiptCard() {
                 Title = title,
                 Buttons = cardButtons,
                 Items = receiptList,
                 Total = statementLines.Sum(x => x.Amount).ToString("#,###,##0.00")
             };
+
             Attachment plAttachment = plCard.ToAttachment();
+
             replyToConversation.Attachments.Add(plAttachment);
             context.PostAsync(replyToConversation);
 
