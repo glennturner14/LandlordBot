@@ -13,7 +13,7 @@ namespace LandlordApp.Dialogs.States
     public class CreateIncomeState : ILandlordState
     {
 
-        public static string ProvideIncomeMessage = "Please provide income in the following format frequency, amount e.g. monthly, 1600";
+        public static string ProvideIncomeMessage = "Please provide income in the following format: start date, frequency, amount e.g. 15/12/16, monthly, 1600";
         public static string GreetingIncomeMessage = "Hi, How are you doing? What would you like to do?";
         public static string DontUnderstand = "I don't understand";
 
@@ -67,13 +67,19 @@ namespace LandlordApp.Dialogs.States
         {
 
             string[] parts = result.Query.Split(',');
-            if (parts.Length != 2)
+            if (parts.Length != 3)
             {
-                return "You need to provide 2 pieces of information frequency and amount";
+                return "You need to provide 3 pieces of information frequency and amount";
             }
 
-            var frequencyText = parts[0];
-            var amountText = parts[1];
+            var startDateText = parts[0].Trim();
+            var frequencyText = parts[1].Trim();
+            var amountText = parts[2].Trim();
+
+            DateTime startDate;
+            if (!DateTime.TryParse(startDateText, out startDate)) {
+                return "I don't understand the start date \"" + startDateText + "\". Please enter correct date.";
+            }
 
             var frequency = Frequency.Unknown;
 
@@ -103,7 +109,7 @@ namespace LandlordApp.Dialogs.States
                 income.RentAmount = amount;
                 income.RentFrequency = frequency;
                 income.Property = new Property() { PropertyId = 1 };
-                income.StartDate = new DateTime(2016, 1, 1);
+                income.StartDate = startDate;
 
                 IncomeGateway incomeGateway = new IncomeGateway();
                 incomeGateway.CreateIncome(income);
@@ -112,7 +118,7 @@ namespace LandlordApp.Dialogs.States
             }
 
             _nextState = new InitialState();
-            return "Income created successfully (wave) " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
+            return "Income created successfully " + startDate.ToShortDateString() + ", " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
 
         }
 

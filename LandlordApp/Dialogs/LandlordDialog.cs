@@ -72,7 +72,10 @@ namespace LandlordApp.Dialogs {
         }
 
         private async Task SendReply(IDialogContext context, string message) {
-            await context.PostAsync(message);
+            if (message != null)
+            {
+                await context.PostAsync(message);
+            }
             context.Wait(MessageReceived);
             CurrentState = CurrentState.NextState;
         }
