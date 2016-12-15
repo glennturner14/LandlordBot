@@ -8,6 +8,8 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 using Microsoft.Bot.Builder.Dialogs;
+using System.Threading;
+using System.Globalization;
 
 namespace LandlordApp {
     [BotAuthentication]
@@ -17,6 +19,10 @@ namespace LandlordApp {
         /// Receive a message from a user and reply to it
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity) {
+
+            Thread.CurrentThread.CurrentCulture =
+                CultureInfo.CreateSpecificCulture("en-GB");
+
             if (activity.Type == ActivityTypes.Message) {
                 await Conversation.SendAsync(activity, () => new Dialogs.LandlordDialog());
             } else {
