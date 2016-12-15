@@ -49,7 +49,7 @@ namespace LandlordApp.Dialogs.States {
             if(result.Query.StartsWith("select "))
             {
                 int propertyID = Convert.ToInt32(result.Query.Replace("select ", ""));
-                _nextState = new PropertySelectedState(propertyID);
+                //_nextState = new PropertySelectedState(propertyID);
                 return "property selected";
             }
 
