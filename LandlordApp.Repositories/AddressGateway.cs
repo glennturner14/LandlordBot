@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LandlordApp.Repositories
 {
-    public class ManageAddresses {
+    public class AddressGateway {
 
         //public DataSet AddAddress(Address address) {
         //    List<DalParm> parms = new List<DalParm>();
@@ -23,7 +23,7 @@ namespace LandlordApp.Repositories
         //}
 
         public List<Address> GetAddresses() {
-            MYOB.DAL.DAL dal = GetDal();
+            MYOB.DAL.DAL dal = GatewayHelper.GetDal();
             List<Address> addresses = new List<Address>();
             DataSet ds = dal.RunSpReturnDs("GetAddresses");
             if (ds.Tables.Count > 0) {
@@ -38,10 +38,7 @@ namespace LandlordApp.Repositories
             }
             return addresses;
         }
-        public MYOB.DAL.DAL GetDal() {
-            MYOB.DAL.DAL dal = new MYOB.DAL.DAL(@"C:\Development\LandlordBot\LandlordBot\SharedAssemblies\Lookup.xml", "0", false, true);
-            return dal;
-        }
+
 
     }
 }

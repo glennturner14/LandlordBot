@@ -23,7 +23,7 @@ namespace LandlordApp.Tests {
         //}
 
         public void GetAddresses() {
-            ManageAddresses manageAddress = new ManageAddresses();
+            AddressGateway manageAddress = new AddressGateway();
             List<Address> addresses = manageAddress.GetAddresses();
             Assert.IsTrue(addresses != null);
             Assert.IsTrue(addresses.Count == 0);

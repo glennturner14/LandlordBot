@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
+using LandlordApp.Repositories;
+using LandlordApp.DomainModel.Entities;
 
 namespace LandlordApp.Dialogs.States
 {
@@ -17,11 +19,11 @@ namespace LandlordApp.Dialogs.States
 
         private ILandlordState _nextState;
 
-        private enum RentFrequency
-        {
-            Unknown,
-            Monthly
-        }
+        //private enum RentFrequency
+        //{
+        //    Unknown,
+        //    Monthly
+        //}
 
         public ILandlordState NextState
         {
@@ -73,20 +75,20 @@ namespace LandlordApp.Dialogs.States
             var frequencyText = parts[0];
             var amountText = parts[1];
 
-            var frequency = RentFrequency.Unknown;
+            var frequency = Frequency.Unknown;
 
             switch (frequencyText)
             {
                 case "monthly":
-                    frequency = RentFrequency.Monthly;
+                    frequency = Frequency.Monthly;
                     break;
                 default:
                     break;
             }
 
-            if (frequency == RentFrequency.Unknown)
+            if (frequency == Frequency.Unknown)
             {
-                return "I don't understand the frequency \"" + frequencyText + "\". Please use either monthly or quartely";
+                return "I don't understand the frequency \"" + frequencyText + "\". Please use either weekly, monthly, quarterly or annually.";
             }
 
             decimal amount = 0;
@@ -96,9 +98,21 @@ namespace LandlordApp.Dialogs.States
             }
 
             // create income
+            try {
+                Income income = new Income();
+                income.RentAmount = amount;
+                income.RentFrequency = frequency;
+                income.Property = new Property() { PropertyId = 1 };
+                income.StartDate = new DateTime(2016, 1, 1);
+
+                IncomeGateway incomeGateway = new IncomeGateway();
+                incomeGateway.CreateIncome(income);
+            } catch (Exception ex) {
+                return "Error creating income: " + ex.Message;
+            }
 
             _nextState = new InitialState();
-            return "Income created successfully " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(RentFrequency), frequency) + ")";
+            return "Income created successfully " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(Frequency), frequency) + ")";
 
         }
     }
