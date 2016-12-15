@@ -9,7 +9,7 @@ namespace LandlordApp.Dialogs.States {
         
 
         public static string MESSAGE_GREETING = "Hi, How are you doing? What would you like to do? (wave)";
-        public static string MESSAGE_DONTUNDERSTAND = "I don't understand";
+        public static string MESSAGE_DONTUNDERSTAND = "I don't understand :s";
         public static string MESSAGE_SHOWSTATEMENT = "Here's your current statement";
 
         public string StatePrefix { get; internal set; }
