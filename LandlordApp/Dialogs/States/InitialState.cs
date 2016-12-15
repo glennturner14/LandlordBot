@@ -89,9 +89,7 @@ namespace LandlordApp.Dialogs.States {
             //    Title = ""
             //};
             //cardButtons.Add(plButton);
-
-            replyToConversation.AttachmentLayout = AttachmentLayoutTypes.Carousel;
-
+            
             List<ReceiptItem> receiptList = new List<ReceiptItem>();
 
             foreach (StatementLine statementLine in statementLines) {
