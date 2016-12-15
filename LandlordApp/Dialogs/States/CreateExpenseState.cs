@@ -243,6 +243,10 @@ namespace LandlordApp.Dialogs.States {
 
         }
 
+
+
+        private string GetStateMessage(string msg) {
+            return string.Format("{0}-{1}", StatePrefix, msg);
         public string ShowStatement() {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }

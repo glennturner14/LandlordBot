@@ -17,7 +17,7 @@ namespace LandlordApp.Dialogs.States {
 
         string CaptureExpense();
 
-        string ShowStatement();
+        string ShowStatement(IDialogContext context, LuisResult result);
 
         ILandlordState NextState { get; }
 

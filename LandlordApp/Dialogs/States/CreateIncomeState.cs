@@ -5,55 +5,101 @@ using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 
-namespace LandlordApp.Dialogs.States {
+namespace LandlordApp.Dialogs.States
+{
     [Serializable]
-    public class CreateIncomeState : BaseState, ILandlordState {
+    public class CreateIncomeState : ILandlordState
+    {
 
-        public static string MESSAGE_PROVIDEINCOME = "Please provide income in the following format {freq},{Amount #.##}";
+        public static string ProvideIncomeMessage = "Please provide income in the following format frequency, amount e.g. monthly, 1600";
+        public static string GreetingIncomeMessage = "Hi, How are you doing? What would you like to do?";
+        public static string DontUnderstand = "I don't understand";
 
         private ILandlordState _nextState;
 
-        public CreateIncomeState() {
-
-            StatePrefix = "INCS";
-
+        private enum RentFrequency
+        {
+            Unknown,
+            Monthly
         }
 
-        public ILandlordState NextState {
-            get {
-                return this;
+        public ILandlordState NextState
+        {
+            get
+            {
+                return _nextState;
             }
         }
 
-        public string CaptureExpense() {
-            _nextState = new CreateExpenseState();
-            return GetStateMessage(CreateExpenseState.MESSAGE_PROVIDEEXPENSE);
+        public CreateIncomeState()
+        {
+            _nextState = this;
         }
 
-        public string CaptureIncome() {
-            return GetStateMessage(MESSAGE_PROVIDEINCOME);
+        public string CaptureExpense()
+        {
+            return DontUnderstand;
         }
 
-        public string Greeting() {
-            return GetStateMessage(MESSAGE_GREETING);
+        public string CaptureIncome()
+        {
+            return DontUnderstand;
         }
 
-        public string None() {
-            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
+        public string Greeting()
+        {
+            return DontUnderstand;
         }
 
-        public string ShowStatement() {
-            return GetStateMessage(MESSAGE_SHOWSTATEMENT);
+        public string None()
+        {
+            return DontUnderstand;
         }
 
-        public string None(IDialogContext context, LuisResult result) {
-            throw new NotImplementedException();
+        public string ShowStatement(IDialogContext context, LuisResult result)
+        {
+            return DontUnderstand;
         }
 
-        public bool CurrentProperty {
-            get {
-                throw new NotImplementedException();
+        public string None(IDialogContext context, LuisResult result)
+        {
+
+            string[] parts = result.Query.Split(',');
+            if (parts.Length != 2)
+            {
+                return "You need to provide 2 pieces of information frequency and amount";
             }
+
+            var frequencyText = parts[0];
+            var amountText = parts[1];
+
+            var frequency = RentFrequency.Unknown;
+
+            switch (frequencyText)
+            {
+                case "monthly":
+                    frequency = RentFrequency.Monthly;
+                    break;
+                default:
+                    break;
+            }
+
+            if (frequency == RentFrequency.Unknown)
+            {
+                return "I don't understand the frequency \"" + frequencyText + "\". Please use either monthly or quartely";
+            }
+
+            decimal amount = 0;
+            if (!decimal.TryParse(amountText, out amount))
+            {
+                return "Amount needs to be a number";
+            }
+
+            // create income
+
+            _nextState = new InitialState();
+            return "Income created successfully " + amount.ToString("£###,###,##0.00") + " (" + Enum.GetName(typeof(RentFrequency), frequency) + ")";
+
         }
     }
 }
