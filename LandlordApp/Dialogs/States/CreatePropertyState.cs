@@ -55,5 +55,10 @@ namespace LandlordApp.Dialogs.States {
         public string ShowStatement(IDialogContext context, LuisResult result) {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
+
+        public string CreateProperty(IDialogContext context, LuisResult result)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

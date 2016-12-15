@@ -64,6 +64,13 @@ namespace LandlordApp.Dialogs {
             await SendReply(context, message);
         }
 
+        [LuisIntent("CreateProperty")]
+        public async Task CreateProperty(IDialogContext context, LuisResult result)
+        {
+            string message = CurrentState.CreateProperty(context, result);
+            await SendReply(context, message);
+        }
+
         private async Task SendReply(IDialogContext context, string message) {
             await context.PostAsync(message);
             context.Wait(MessageReceived);
