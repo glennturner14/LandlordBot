@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿using LandlordApp.DomainModel.Entities;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
 using System;
@@ -10,7 +11,8 @@ namespace LandlordApp.Dialogs.States {
     [Serializable]
     public class CreateExpenseState : BaseState, ILandlordState {
 
-        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format {dd / mm / yyyy},{Amount #.##}";
+        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format: {Date dd/mm/yy},{Amount #.##},{desc}";
+        public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created.";
 
         private ILandlordState _nextState;
 
@@ -29,7 +31,7 @@ namespace LandlordApp.Dialogs.States {
 
         public ILandlordState NextState {
             get {
-                return this;
+                return _nextState;
             }
         }
 
@@ -48,29 +50,75 @@ namespace LandlordApp.Dialogs.States {
 
         public string None(IDialogContext context, LuisResult result) {
 
-            switch (result.Query)
-            {
+            //switch (result.Query)
+            //{
 
-                case "test1":
-                    return CreateHeroCard(context, result);
+            //    case "test1":
+            //        return CreateHeroCard(context, result);
 
-                case "test2":
-                    return CreateThumbnail(context, result);
+            //    case "test2":
+            //        return CreateThumbnail(context, result);
 
-                case "test3":
-                    var descriptions = new List<string>();
-                    var amounts = new List<decimal>();
-                    for (int i = 0; i < 12; i++)
-                    {
-                        descriptions.Add(new DateTime(2016, i + 1, 21).ToShortDateString() + " -  Rent");
-                        amounts.Add(1200);
-                    }
-                    return CreateReceipt(context, result, "Account Statement to date", descriptions.ToArray(), amounts.ToArray(), 1000m);
+            //    case "test3":
+            //        var descriptions = new List<string>();
+            //        var amounts = new List<decimal>();
+            //        for (int i = 0; i < 12; i++)
+            //        {
+            //            descriptions.Add(new DateTime(2016, i + 1, 21).ToShortDateString() + " -  Rent");
+            //            amounts.Add(1200);
+            //        }
+            //        return CreateReceipt(context, result, "Account Statement to date", descriptions.ToArray(), amounts.ToArray(), 1000m);
 
-                default:
-                    return "none";
+            //    default:
+            //        return "none";
+            //}
+
+            Expense expense = null;
+
+            //15/12/16,100.00,Taps,Bathroom
+            string[] split = result.Query.Split(new Char[] { ',' });
+            if (split.Count() > 0 && split.Count() == 3) { 
+                //We have an expense format...
+                string date = split[0];
+                string amount = split[1];
+                string desc = split[2];
+
+                expense = CreateExpense(date, amount, desc);
+
+                //We have a valid date save to the DB...
+
             }
-            
+
+            if (expense != null) {
+
+                _nextState = new InitialState();
+
+                return GetStateMessage(string.Format("{0} - {1}, {2}, {3}", MESSAGE_CREATEDEXPENSE, expense.Date, expense.Amount, expense.Description));
+            }
+            else {
+                //Invalid Expense...
+                return GetStateMessage(MESSAGE_PROVIDEEXPENSE);
+            }
+    }
+
+        private Expense CreateExpense(string date, string amount, string desc) {
+            DateTime expenseDate;
+            Decimal expenseAmount;
+
+            Expense expense = new Expense();
+            if (DateTime.TryParse(date, out expenseDate))
+                expense.Date = expenseDate;
+            else
+                return null;
+
+            if (Decimal.TryParse(amount, out expenseAmount))
+                expense.Amount = expenseAmount;
+            else
+                return null;
+           
+            expense.Description = desc;
+
+            return expense;
         }
 
         private string CreateReceipt(IDialogContext context, LuisResult result, string title, string[] descriptions, decimal[] prices, decimal tax)
@@ -171,7 +219,7 @@ namespace LandlordApp.Dialogs.States {
             
             context.PostAsync(replyToConversation);
 
-            return "I don't understand expense";
+            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
 
         }
 
@@ -191,7 +239,7 @@ namespace LandlordApp.Dialogs.States {
             };
             Attachment plAttachment = plCard.ToAttachment();
 
-            return GetStateMessage(DontUnderstand);
+            return plAttachment; // GetStateMessage(MESSAGE_DONTUNDERSTAND);
 
         }
 
