@@ -45,6 +45,14 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string None(IDialogContext context, LuisResult result) {
+
+            if(result.Query.StartsWith("select "))
+            {
+                int propertyID = Convert.ToInt32(result.Query.Replace("select ", ""));
+                _nextState = new PropertySelectedState(propertyID);
+                return "property selected";
+            }
+
             return GetStateMessage(MESSAGE_DONTUNDERSTAND);
         }
 
@@ -176,7 +184,7 @@ namespace LandlordApp.Dialogs.States {
 
             properties.Add(new Property()
             {
-                PropertyId = 1,
+                PropertyId = 2,
                 Address = new DomainModel.Entities.Address()
                 {
                     AddressLine1 = "1 Brighton Road",
@@ -190,7 +198,7 @@ namespace LandlordApp.Dialogs.States {
 
             properties.Add(new Property()
             {
-                PropertyId = 1,
+                PropertyId = 3,
                 Address = new DomainModel.Entities.Address()
                 {
                     AddressLine1 = "1 Jean Claude Route",
@@ -216,18 +224,16 @@ namespace LandlordApp.Dialogs.States {
 
 
             _nextState = new InitialState();
-            return "Create property";
+
+            return null;
         }
 
         private Attachment CreateThumbnailAttachment(Property property)
         {
 
-            string imageUrl = "http://www.emoji.co.uk/files/apple-emojis/travel-places-ios/573-house-building.png";
+            string imageUrl = "http://www.ipsproperty.co.uk/s/cc_images/cache_2424252058.png?t=1343996963";
             switch (property.Type)
             {
-                case PropertyType.UKProperty:
-                    imageUrl = "http://www.emoji.co.uk/files/apple-emojis/travel-places-ios/573-house-building.png";
-                    break;
                 case PropertyType.UKFurnishedHolidayLet:
                     imageUrl = "https://www.midoro.me/wp-content/uploads/2014/01/House-for-Holiday-128x128.png";
                     break;
@@ -239,6 +245,14 @@ namespace LandlordApp.Dialogs.States {
             List<CardImage> cardImages = new List<CardImage>();
             cardImages.Add(new CardImage(url: imageUrl));
             List<CardAction> cardButtons = new List<CardAction>();
+
+            CardAction plButton = new CardAction()
+            {
+                Value = "select " + property.PropertyId,
+                Type = "imBack",
+                Title = "select"
+            };
+            cardButtons.Add(plButton);
 
             ThumbnailCard plCard = new ThumbnailCard()
             {
