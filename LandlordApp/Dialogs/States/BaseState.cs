@@ -8,7 +8,7 @@ namespace LandlordApp.Dialogs.States {
     public abstract class BaseState {
         
 
-        public static string MESSAGE_GREETING = "Hi, How are you doing? What would you like to do?";
+        public static string MESSAGE_GREETING = "Hi, How are you doing? What would you like to do? (wave)";
         public static string MESSAGE_DONTUNDERSTAND = "I don't understand";
         public static string MESSAGE_SHOWSTATEMENT = "Here's your current statement";
 
