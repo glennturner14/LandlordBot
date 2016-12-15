@@ -17,10 +17,11 @@ namespace LandlordApp.Dialogs.States {
 
         string CaptureExpense();
 
-        string ShowStatement();
+        string ShowStatement(IDialogContext context, LuisResult result);
 
         ILandlordState NextState { get; }
 
         string None(IDialogContext context, LuisResult result);
+
     }
 }

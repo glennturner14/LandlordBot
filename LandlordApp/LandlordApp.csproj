@@ -122,6 +122,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\LandlordDialog.cs" />
+    <Compile Include="Dialogs\States\BaseState.cs" />
     <Compile Include="Dialogs\States\CreateIncomeState.cs" />
     <Compile Include="Dialogs\States\CreateExpenseState.cs" />
     <Compile Include="Dialogs\States\CreatePropertyState.cs" />
