@@ -60,7 +60,7 @@ namespace LandlordApp.Dialogs {
 
         [LuisIntent("ShowStatement")]
         public async Task ShowStatement(IDialogContext context, LuisResult result) {
-            string message = CurrentState.ShowStatement();
+            string message = CurrentState.ShowStatement(context, result);
             await SendReply(context, message);
         }
 

@@ -182,7 +182,7 @@ namespace LandlordApp.Dialogs.States {
 
         }
 
-        public string ShowStatement() {
+        public string ShowStatement(IDialogContext context, LuisResult result) {
             throw new NotImplementedException();
         }
 

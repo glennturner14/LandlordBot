@@ -56,7 +56,7 @@ namespace LandlordApp.Dialogs.States
             return DontUnderstand;
         }
 
-        public string ShowStatement()
+        public string ShowStatement(IDialogContext context, LuisResult result)
         {
             return DontUnderstand;
         }
