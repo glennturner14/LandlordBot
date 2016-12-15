@@ -15,6 +15,7 @@ namespace LandlordApp.DomainModel.Entities
 
     public class Property
     {
+        public int PropertyId { get; set; }
         public Address Address { get; set; }
         public PropertyType Type { get; set; }
         public Landlord Owner { get; set; }

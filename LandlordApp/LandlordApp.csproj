@@ -141,6 +141,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LandlordApp.DomainModel\LandlordApp.DomainModel.csproj">
+      <Project>{6BBDDCBF-75E0-455E-9AA3-25EFA91061D4}</Project>
+      <Name>LandlordApp.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LandlordApp.Repositories\LandlordApp.Repositories.csproj">
+      <Project>{3C3756B6-D2CD-493D-B886-9117DFD47987}</Project>
+      <Name>LandlordApp.Repositories</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ManageAddresses.cs" />
+    <Compile Include="GatewayHelper.cs" />
+    <Compile Include="IncomeGateway.cs" />
+    <Compile Include="AddressGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

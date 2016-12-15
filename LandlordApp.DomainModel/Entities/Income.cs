@@ -8,9 +8,11 @@ namespace LandlordApp.DomainModel.Entities
 {
     public enum Frequency
     {
-        Annually,
-        Monthly,
+        Unknown,
         Weekly,
+        Monthly,
+        Quarterly,
+        Annually,
         Other
     }
 
