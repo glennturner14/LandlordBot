@@ -170,12 +170,9 @@ namespace LandlordApp.Dialogs.States {
         private Attachment CreateThumbnailAttachment(Property property)
         {
 
-            string imageUrl = "http://www.emoji.co.uk/files/apple-emojis/travel-places-ios/573-house-building.png";
+            string imageUrl = "http://www.ipsproperty.co.uk/s/cc_images/cache_2424252058.png?t=1343996963";
             switch (property.Type)
             {
-                case PropertyType.UKProperty:
-                    imageUrl = "http://www.emoji.co.uk/files/apple-emojis/travel-places-ios/573-house-building.png";
-                    break;
                 case PropertyType.UKFurnishedHolidayLet:
                     imageUrl = "https://www.midoro.me/wp-content/uploads/2014/01/House-for-Holiday-128x128.png";
                     break;
