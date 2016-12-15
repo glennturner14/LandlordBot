@@ -12,8 +12,8 @@ namespace LandlordApp.Dialogs.States {
     [Serializable]
     public class CreateExpenseState : BaseState, ILandlordState {
 
-        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format: {Date dd/mm/yy},{Amount #.##},{desc}";
-        public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created.";
+        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format eg 15/12/16, 1600, fixed roof";
+        public static string MESSAGE_CREATEDEXPENSE = "Expense successfully created. (Y)";
 
         private ILandlordState _nextState;
 
@@ -91,7 +91,7 @@ namespace LandlordApp.Dialogs.States {
                     expenseGateway.CreateExpense(expense);
                 }
             } catch (Exception ex) {
-                return "Error creating an expense: " + ex.Message;
+                return "Error creating an expense (wasntme) : " + ex.Message;
             }
             if (expense != null) {
 
@@ -134,13 +134,13 @@ namespace LandlordApp.Dialogs.States {
             List<CardImage> cardImages = new List<CardImage>();
             //cardImages.Add(new CardImage(url: "https://static-s.aa-cdn.net/img/gp/20600004700445/H8HgqumAcQ6CV3VqjlqUNfatF5xzrgcETIApZy5vTu_y8zGATBeZ-KhaAW_rh9Vuzg=w300?v=1"));
             List<CardAction> cardButtons = new List<CardAction>();
-            CardAction plButton = new CardAction()
-            {
-                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
-                Type = "openUrl",
-                Title = "WikiPedia Page"
-            };
-            cardButtons.Add(plButton);
+            //CardAction plButton = new CardAction()
+            //{
+            //    Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+            //    Type = "openUrl",
+            //    Title = ""
+            //};
+            //cardButtons.Add(plButton);
 
             List<ReceiptItem> receiptList = new List<ReceiptItem>();
 
