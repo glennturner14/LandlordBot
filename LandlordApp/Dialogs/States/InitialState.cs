@@ -8,35 +8,38 @@ using System.Web;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
-    public class InitialState : ILandlordState {
-
-        private string StatePrefix = "IS";
+    public class InitialState : BaseState, ILandlordState {
 
         private ILandlordState _nextState;
 
-        public static string MESSAGE_GREETINGS = "Hi, How are you doing? What would you like to do?";
-        public static string MESSAGE_DONTUNDERSTAND = "I don't understand";
-        public static string MESSAGE_SHOWSTATEMENT = "Here's your current statement";
-
         public InitialState() {
+
+            StatePrefix = "IS";
+
             _nextState = this;
         }
         public string CaptureExpense() {
             _nextState = new CreateExpenseState();
-            return GetStateMessage(CreateExpenseState.ProvideExpenseMessage);
+            return this.GetStateMessage(CreateExpenseState.MESSAGE_PROVIDEEXPENSE);
          }
 
         public string CaptureIncome() {
             _nextState = new CreateIncomeState();
-            return GetStateMessage(CreateIncomeState.ProvideIncomeMessage);
+            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
         }
 
         public ILandlordState NextState {
             get { return _nextState; }
         }
 
+        public bool CurrentProperty {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
         public string Greeting() {
-            return GetStateMessage(MESSAGE_GREETINGS);
+            return GetStateMessage(MESSAGE_GREETING);
         }
 
         public string None(IDialogContext context, LuisResult result) {
@@ -45,10 +48,6 @@ namespace LandlordApp.Dialogs.States {
 
         public string ShowStatement() {
             return GetStateMessage(MESSAGE_SHOWSTATEMENT);
-        }
-
-        private string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
         }
     }
 }

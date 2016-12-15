@@ -7,11 +7,17 @@ using Microsoft.Bot.Builder.Luis.Models;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
-    public class CreateIncomeState : ILandlordState {
+    public class CreateIncomeState : BaseState, ILandlordState {
 
-        public static string ProvideIncomeMessage = "Please provide income in the following format {freq},{Amount #.##}";
-        public static string GreetingIncomeMessage = "Hi, How are you doing? What would you like to do?";
-        public static string DontUnderstand = "I don't understand";
+        public static string MESSAGE_PROVIDEINCOME = "Please provide income in the following format {freq},{Amount #.##}";
+
+        private ILandlordState _nextState;
+
+        public CreateIncomeState() {
+
+            StatePrefix = "INCS";
+
+        }
 
         public ILandlordState NextState {
             get {
@@ -20,27 +26,34 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string CaptureExpense() {
-            throw new NotImplementedException();
+            _nextState = new CreateExpenseState();
+            return GetStateMessage(CreateExpenseState.MESSAGE_PROVIDEEXPENSE);
         }
 
         public string CaptureIncome() {
-            throw new NotImplementedException();
+            return GetStateMessage(MESSAGE_PROVIDEINCOME);
         }
 
         public string Greeting() {
-            return GreetingIncomeMessage;
+            return GetStateMessage(MESSAGE_GREETING);
         }
 
         public string None() {
-            return DontUnderstand;
+            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
         }
 
         public string ShowStatement() {
-            throw new NotImplementedException();
+            return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
 
         public string None(IDialogContext context, LuisResult result) {
             throw new NotImplementedException();
+        }
+
+        public bool CurrentProperty {
+            get {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -8,13 +8,36 @@ using System.Web;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
-    public class CreatePropertyState : ILandlordState {
+    public class CreatePropertyState : BaseState, ILandlordState {
+
+        private ILandlordState _nextState;
+        private bool _currentProperty; 
+
+
+
+        public bool CurrentProperty {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
+        public CreatePropertyState() {
+
+            StatePrefix = "PS";
+
+            _nextState = this;
+            _currentProperty = false;
+        }
+
         public string CaptureExpense() {
-            throw new NotImplementedException();
+            _nextState = new CreateExpenseState();
+            return GetStateMessage(CreateExpenseState.MESSAGE_PROVIDEEXPENSE);
         }
 
         public string CaptureIncome() {
-            throw new NotImplementedException();
+            if (_currentProperty)
+            _nextState = new CreateIncomeState();
+            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
         }
 
         public ILandlordState NextState {
@@ -22,7 +45,7 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string Greeting() {
-            throw new NotImplementedException();
+            return GetStateMessage(MESSAGE_GREETING);
         }
 
         public string None(IDialogContext message, LuisResult result) {
@@ -30,7 +53,7 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string ShowStatement() {
-            throw new NotImplementedException();
+            return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
     }
 }

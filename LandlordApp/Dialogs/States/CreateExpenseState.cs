@@ -8,13 +8,25 @@ using System.Web;
 
 namespace LandlordApp.Dialogs.States {
     [Serializable]
-    public class CreateExpenseState : ILandlordState {
+    public class CreateExpenseState : BaseState, ILandlordState {
 
-        private string StatePrefix = "ES";
+        public static string MESSAGE_PROVIDEEXPENSE = "Please provide expense in the following format {dd / mm / yyyy},{Amount #.##}";
 
-        public static string ProvideExpenseMessage = "Please provide expense in the following format {dd / mm / yyyy},{Amount #.##}";
-        public static string GreetingExpenseMessage = "Hi, How are you doing? What would you like to do?";
-        public static string DontUnderstand = "I don't understand";
+        private ILandlordState _nextState;
+
+        public CreateExpenseState() {
+            base.StatePrefix = "ES";
+
+            _nextState = this;
+
+        }
+
+        public bool CurrentProperty {
+            get {
+                throw new NotImplementedException();
+            }
+        }
+
         public ILandlordState NextState {
             get {
                 return this;
@@ -22,18 +34,24 @@ namespace LandlordApp.Dialogs.States {
         }
 
         public string CaptureExpense() {
-            throw new NotImplementedException();
+            return this.GetStateMessage(CreateExpenseState.MESSAGE_PROVIDEEXPENSE);
         }
 
         public string CaptureIncome() {
-            throw new NotImplementedException();
+            _nextState = new CreateIncomeState();
+            return GetStateMessage(CreateIncomeState.MESSAGE_PROVIDEINCOME);
         }
 
         public string Greeting() {
-            return GetStateMessage(GreetingExpenseMessage);
+            return GetStateMessage(MESSAGE_GREETING);
         }
 
         public string None(IDialogContext context, LuisResult result) {
+
+            //Unclear here....
+            //We are in an Create Expense state but how do we record the response as LUIS determines it as a 
+            //None entry as it doesn't understand it??? So what do we do?
+            //???Add the context.Activity.message detail to UserData???
 
             var replyToConversation = context.MakeMessage();
             //replyToConversation.Recipient = context.From;
@@ -61,16 +79,12 @@ namespace LandlordApp.Dialogs.States {
             replyToConversation.Attachments.Add(plAttachment);
             var reply = context.PostAsync(replyToConversation);
 
-            return GetStateMessage(DontUnderstand);
+            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
 
         }
 
         public string ShowStatement() {
-            throw new NotImplementedException();
-        }
-
-        private string GetStateMessage(string msg) {
-            return string.Format("{0}-{1}", StatePrefix, msg);
+            return GetStateMessage(MESSAGE_SHOWSTATEMENT);
         }
     }
 }
