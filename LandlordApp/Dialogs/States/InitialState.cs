@@ -49,12 +49,11 @@ namespace LandlordApp.Dialogs.States {
             if(result.Query.StartsWith("select "))
             {
                 int propertyID = Convert.ToInt32(result.Query.Replace("select ", ""));
-                _nextState = new PropertySelectedState(propertyID);
+                //_nextState = new PropertySelectedState(propertyID);
                 return "property selected";
             }
 
-            //return GetStateMessage(MESSAGE_DONTUNDERSTAND);
-            return System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            return GetStateMessage(MESSAGE_DONTUNDERSTAND);
         }
 
         public string ShowStatement(IDialogContext context, LuisResult result) {
